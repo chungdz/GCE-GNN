@@ -44,9 +44,9 @@ logging.basicConfig(level=logging.INFO, filename=log_file, format=FORMAT, datefm
 
 def main():
     cur_dir = os.getcwd()
-    train_dataset = MultiSessionsGraph(cur_dir + '/datasets/' + opt.dataset, phrase='train', opt=opt)
+    train_dataset = MultiSessionsGraph(cur_dir + '/datasets/' + opt.dataset, phrase='train')
     train_loader = DataLoader(train_dataset, batch_size=opt.batchSize, shuffle=True)
-    test_dataset = MultiSessionsGraph(cur_dir + '/datasets/' + opt.dataset, phrase='test', opt=opt)
+    test_dataset = MultiSessionsGraph(cur_dir + '/datasets/' + opt.dataset, phrase='test')
     test_loader = DataLoader(test_dataset, batch_size=opt.batchSize, shuffle=False)
 
     if opt.dataset == 'diginetica':
