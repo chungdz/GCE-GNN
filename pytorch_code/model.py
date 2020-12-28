@@ -257,7 +257,6 @@ def forward(model, i, data):
 
 
 def train_test(model, train, test, logging):
-    model.scheduler.step()
     print('start training: ', datetime.datetime.now())
     model.train()
     total_loss = 0.0
@@ -294,4 +293,5 @@ def train_test(model, train, test, logging):
                 mrr.append(1 / (np.where(score == target)[0][0] + 1))
     hit = np.mean(hit) * 100
     mrr = np.mean(mrr) * 100
+    model.scheduler.step()
     return hit, mrr

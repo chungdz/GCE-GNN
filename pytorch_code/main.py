@@ -11,7 +11,6 @@ import pickle
 import logging
 import time
 from datetime import datetime as dt
-from utils import build_graph, Data, split_validation
 from model import *
 import os
 from graph_loader import MultiSessionsGraph
@@ -50,7 +49,7 @@ def main():
     test_loader = DataLoader(test_dataset, batch_size=opt.batchSize, shuffle=False)
 
     if opt.dataset == 'diginetica':
-        n_node = 43040
+        n_node = 43098
     elif opt.dataset == 'yoochoose1_64' or opt.dataset == 'yoochoose1_4':
         n_node = 37484
     elif opt.dataset == 'diginetica_users':

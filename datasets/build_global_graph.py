@@ -9,7 +9,7 @@ import torch
 import os
 
 # dataset = 'datasets/sample/'
-dataset = 'datasets/diginetica/'
+dataset = './diginetica/'
 # Global graph
 with open(dataset+'train.txt', 'rb') as f:
     train = pickle.load(f)
