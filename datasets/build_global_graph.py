@@ -3,15 +3,20 @@ from torch_geometric.utils import from_networkx, to_networkx
 import torch
 import numpy as np
 import pickle
+import argparse
 from tqdm import tqdm
 import networkx as nx
 import torch
 import os
 
-# dataset = 'datasets/sample/'
-dataset = './diginetica/'
+parser = argparse.ArgumentParser()
+parser.add_argument('--dataset', default='diginetica', help='dataset name: diginetica/yoochoose/sample')
+opt = parser.parse_args()
+print(opt)
+
+dataset = opt.dataset
 # Global graph
-with open(dataset+'train.txt', 'rb') as f:
+with open('./' + dataset + '/train.txt', 'rb') as f:
     train = pickle.load(f)
 if not os.path.exists(dataset+'unique_nodes.pkl'):
     # unique items in train
