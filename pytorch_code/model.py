@@ -277,20 +277,26 @@ def train_test(model, train, test, logging):
     print('start predicting: ', datetime.datetime.now())
     model.eval()
     hit, mrr = [], []
+    error_batch = 0
     for i, batch in enumerate(test):
-        targets, scores = forward(model, i, batch.to('cuda'))
-        targets -= 1
-        sub_scores = scores.topk(20)[1]
-        sub_scores = trans_to_cpu(sub_scores).detach().numpy()
-        targets = targets.cpu().numpy()  # target & score must both be numpy arrays
-        for score, target in zip(sub_scores, targets):
-            hit.append(np.isin(target, score))
-            if not np.isin(target, score):
-            # if len(np.where(score == target)[0]) == 0:
-                mrr.append(0)
-            else:
-                # at_where = np.where(score == target)
-                mrr.append(1 / (np.where(score == target)[0][0] + 1))
+        try:
+            targets, scores = forward(model, i, batch.to('cuda'))
+            targets -= 1
+            sub_scores = scores.topk(20)[1]
+            sub_scores = trans_to_cpu(sub_scores).detach().numpy()
+            targets = targets.cpu().numpy()  # target & score must both be numpy arrays
+            for score, target in zip(sub_scores, targets):
+                hit.append(np.isin(target, score))
+                if not np.isin(target, score):
+                # if len(np.where(score == target)[0]) == 0:
+                    mrr.append(0)
+                else:
+                    # at_where = np.where(score == target)
+                    mrr.append(1 / (np.where(score == target)[0][0] + 1))
+        except:
+            error_batch += 1
+            continue
+    print(i, error_batch)
     hit = np.mean(hit) * 100
     mrr = np.mean(mrr) * 100
     model.scheduler.step()
