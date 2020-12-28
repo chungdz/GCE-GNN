@@ -14,9 +14,9 @@ parser.add_argument('--dataset', default='diginetica', help='dataset name: digin
 opt = parser.parse_args()
 print(opt)
 
-dataset = opt.dataset
+dataset = './' + opt.dataset + '/'
 # Global graph
-with open('./' + dataset + '/train.txt', 'rb') as f:
+with open(dataset + 'train.txt', 'rb') as f:
     train = pickle.load(f)
 if not os.path.exists(dataset+'unique_nodes.pkl'):
     # unique items in train
